@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: switchboard
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: switchboard
+  template:
+    metadata:
+      labels:
+        app: switchboard
+    spec:
+      containers:
+        - name: switchboard
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/sb.json
+              subPath: sb.json
+            - name: log-volume
+              mountPath: /app/logs
+      volumes:
+        - name: config-volume
+          configMap:
+            name: switchboard-config
+        - name: log-volume
+          persistentVolumeClaim:
+            claimName: switchboard-pvc
