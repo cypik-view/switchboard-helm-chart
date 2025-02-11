@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  switchboard:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-02-11T18:23:47.223107357+05:30"
+    description: A Helm chart for Kubernetes
+    digest: 77ebb220329c00a09de2d5592cf105d4d272955719730cf54133898eb94269d8
+    name: switchboard
+    type: application
+    urls:
+    - https://github.com/cypik-view/switchboard-helm-chart.git/charts/switchboard-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-02-11T18:23:47.219565423+05:30"
