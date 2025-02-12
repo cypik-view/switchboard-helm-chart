@@ -22,15 +22,16 @@ spec:
               value: "{{ $value }}"
             {{- end }}
           volumeMounts:
-            - name: config-volume
-              mountPath: /app/sb.json
-              subPath: sb.json
-            - name: log-volume
-              mountPath: /app/logs
+            - name: {{ .Values.volumeMounts.configVolume.name }}
+              mountPath: "{{ .Values.volumeMounts.configVolume.mountPath }}"
+              subPath: "{{ .Values.volumeMounts.configVolume.subPath }}"
+            - name: {{ .Values.volumeMounts.logVolume.name }}
+              mountPath: "{{ .Values.volumeMounts.logVolume.mountPath }}"
       volumes:
         - name: config-volume
           configMap:
-            name: switchboard-config
+            name: "{{ .Values.volumes.configVolume.configMapName }}"
+
         - name: log-volume
           persistentVolumeClaim:
-            claimName: switchboard-pvc
+            claimName: "{{ .Values.persistence.pvcName }}"
